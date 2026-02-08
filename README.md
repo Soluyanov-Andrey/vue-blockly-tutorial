@@ -1,42 +1,21 @@
-# vue-project
+![Blockly во Vue.js](./docs/img.png)
 
-This template should help get you started developing with Vue 3 in Vite.
+# Руководство по изучению Blockly во Vue.js с пошаговыми коммитами
 
-## Recommended IDE Setup
+## Цель
 
-[VS Code](https://code.visualstudio.com/) + [Vue (Official)](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+Поэтапное изучение библиотеки Blockly в рамках Vue.js приложения. Каждый значимый шаг будет сопровождаться подробными комментариями в коде и фиксироваться в отдельном коммите, что позволит отслеживать прогресс и понимать эволюцию проекта.
 
-## Recommended Browser Setup
+## Что такое Blockly?
 
-- Chromium-based browsers (Chrome, Edge, Brave, etc.):
-  - [Vue.js devtools](https://chromewebstore.google.com/detail/vuejs-devtools/nhdogjmejiglipccpnnnanhbledajbpd)
-  - [Turn on Custom Object Formatter in Chrome DevTools](http://bit.ly/object-formatters)
-- Firefox:
-  - [Vue.js devtools](https://addons.mozilla.org/en-US/firefox/addon/vue-js-devtools/)
-  - [Turn on Custom Object Formatter in Firefox DevTools](https://fxdx.dev/firefox-devtools-custom-object-formatters/)
+**Blockly** — это библиотека с открытым исходным кодом от Google для создания визуальных редакторов кода на основе блоков. Она позволяет пользователям создавать программы, перетаскивая графические блоки, что особенно полезно для:
 
-## Type Support for `.vue` Imports in TS
+- Обучения программированию новичков
+- Создания инструментов для визуального программирования
+- Разработки систем сценариев и автоматизации
+- Образовательных платформ и сред разработки
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+[Ключевые возможности Blockly](./docs/1.md)
+[Начальная установка](./docs/2.md)
+[](./docs/3.md)
 
-## Customize configuration
-
-See [Vite Configuration Reference](https://vite.dev/config/).
-
-## Project Setup
-
-```sh
-npm install
-```
-
-### Compile and Hot-Reload for Development
-
-```sh
-npm run dev
-```
-
-### Type-Check, Compile and Minify for Production
-
-```sh
-npm run build
-```
