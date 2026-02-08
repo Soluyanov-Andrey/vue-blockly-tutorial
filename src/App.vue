@@ -46,6 +46,41 @@ onUnmounted(() => {
   if (workspace) workspace.dispose()
 })
 
+
+// Описываем новые блоки
+const customBlocks = [
+  {
+    "type": "move_robot",
+    "message0": "Двигаться вперед со скоростью %1",
+    "args0": [
+      {
+        "type": "field_number",
+        "name": "SPEED",
+        "value": 100,
+        "min": 0,
+        "max": 255
+      }
+    ],
+    "previousStatement": null, // Позволяет присоединять сверху
+    "nextStatement": null,     // Позволяет присоединять снизу
+    "colour": 230,
+    "tooltip": "Запускает моторы",
+    "helpUrl": ""
+  },
+  {
+    "type": "stop_robot",
+    "message0": "Остановить робота",
+    "previousStatement": null,
+    "nextStatement": null,
+    "colour": 0,
+    "tooltip": "Выключает все моторы",
+    "helpUrl": ""
+  }
+];
+
+// Регистрируем их в Blockly
+Blockly.common.defineBlocksWithJsonArray(customBlocks);
+
 function resizeBlockly() {
   if (!workspace) return
 

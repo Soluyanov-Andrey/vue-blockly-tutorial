@@ -42,6 +42,17 @@
         { "kind": "block", "type": "text_length" },
         { "kind": "block", "type": "text_print" }
       ]
+    },
+    {
+      "kind": "category",
+      "name": "Робот",
+      "colour": "#FF0000",
+      "contents": [
+        { "kind": "block", "type": "move_robot" },
+        { "kind": "block", "type": "stop_robot" }
+      ]
     }
+
+
   ]
 }
