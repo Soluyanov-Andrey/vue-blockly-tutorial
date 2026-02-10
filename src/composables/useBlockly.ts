@@ -1,6 +1,7 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import * as Blockly from 'blockly/core'
 import toolboxConfig from '@/toolbox.json'  // @ = src/ (настройте alias в vite.config.ts, если нужно)
+import { registerMyPrint } from '@/blocks/custom/myPrint';
 
 export function useBlockly() {
   const workspace = ref<Blockly.WorkspaceSvg | null>(null)
@@ -28,8 +29,14 @@ export function useBlockly() {
 
     Blockly.svgResize(workspace.value)
   }
+  
 
   onMounted(() => {
+  // Сначала очищаем стандартные блоки, если хотите чистый набор
+  // Blockly.Blocks = {};   // ← раскомментируйте, если хотите отключить всё лишнее
+
+  // Регистрируем только свои блоки
+    registerMyPrint();
     workspace.value = Blockly.inject('blocklyDiv', {
       toolbox: toolboxConfig,
       zoom: {
