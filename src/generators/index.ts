@@ -1,0 +1,1 @@
+// Экспорт (import * as Generators from './generators';)

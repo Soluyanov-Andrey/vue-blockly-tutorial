@@ -1,0 +1,1 @@
+// Хук для инициализации workspace, resize, dispose
