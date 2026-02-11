@@ -3,12 +3,31 @@
   "contents": [
     {
       "kind": "category",
-      "name": "Мои блоки",
-      "colour": "#A65C5C",
+      "name": "Мои устройства",
       "contents": [
         {
           "kind": "block",
-          "type": "my_print" 
+          "type": "my_print",
+          "id": "device_alpha",
+          "fields": {
+            "NAME": "Принтер Альфа"
+          }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "device_beta",
+          "fields": {
+            "NAME": "Принтер Бета"
+          }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "device_gamma",
+          "fields": {
+            "NAME": "Принтер Гамма"
+          }
         }
       ]
     }
