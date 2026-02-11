@@ -43,8 +43,6 @@ jsonGenerator.forBlock['my_print'] = function(block, generator) {
  */
 jsonGenerator.scrub_ = function (block, code, thisOnly) {
   // Возвращаем только код самого блока. 
-  // Мы НЕ добавляем здесь код следующего блока автоматически, 
-  // так как мы уже сделали это выше в "blockData.next".
   return code;
 }
 
