@@ -7,12 +7,12 @@ export function registerMyPrint() {
   Blockly.Blocks['my_print'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Устройство:")
+          .appendField(":")
           .appendField(new Blockly.FieldLabelSerializable(""), "NAME"); // Поле для имени
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);
       this.setColour(160);
-      this.setTooltip("Уникальный блок устройства");
+      this.setTooltip("Уникальный блок");
     }
   };
 }
