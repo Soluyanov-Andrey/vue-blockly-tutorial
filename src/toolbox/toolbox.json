@@ -3,30 +3,30 @@
   "contents": [
     {
       "kind": "category",
-      "name": "Мои устройства",
+      "name": "Мои блоки",
       "contents": [
         {
           "kind": "block",
           "type": "my_print",
-          "id": "device_alpha",
+          "id": "block-1",
           "fields": {
-            "NAME": "Принтер Альфа"
+            "NAME": "Блок-1"
           }
         },
         {
           "kind": "block",
           "type": "my_print",
-          "id": "device_beta",
+          "id": "block-2",
           "fields": {
-            "NAME": "Принтер Бета"
+            "NAME": "Блок-2"
           }
         },
         {
           "kind": "block",
           "type": "my_print",
-          "id": "device_gamma",
+          "id": "block-3",
           "fields": {
-            "NAME": "Принтер Гамма"
+            "NAME": "Блок-3"
           }
         }
       ]
