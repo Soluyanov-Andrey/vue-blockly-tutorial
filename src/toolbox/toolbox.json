@@ -8,7 +8,9 @@
         {
           "kind": "block",
           "type": "my_print",
-          "id": "block-1",
+          "id": "block_01",
+
+
           "fields": {
             "NAME": "Блок-1"
           }
@@ -16,7 +18,7 @@
         {
           "kind": "block",
           "type": "my_print",
-          "id": "block-2",
+          "id": "block_02",
           "fields": {
             "NAME": "Блок-2"
           }
@@ -24,7 +26,7 @@
         {
           "kind": "block",
           "type": "my_print",
-          "id": "block-3",
+          "id": "block_03",
           "fields": {
             "NAME": "Блок-3"
           }

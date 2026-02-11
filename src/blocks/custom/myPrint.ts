@@ -7,7 +7,7 @@ export function registerMyPrint() {
   Blockly.Blocks['my_print'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField(":")
+          .appendField("") // Здесь пусто если дописать появиться надпись перед блоком
           .appendField(new Blockly.FieldLabelSerializable(""), "NAME"); // Поле для имени
       this.setPreviousStatement(true, null);
       this.setNextStatement(true, null);

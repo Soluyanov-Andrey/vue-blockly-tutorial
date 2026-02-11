@@ -17,9 +17,9 @@ export function useBlockly() {
 
   // Список всех наших уникальных ID (позже можно вынести в JSON)
   const ALL_DEVICES = [
-    { id: 'device_alpha', name: 'Принтер Альфа' },
-    { id: 'device_beta', name: 'Принтер Бета' },
-    { id: 'device_gamma', name: 'Принтер Гамма' }
+    { id: 'block_01', name: 'Блок-1' },
+    { id: 'block_02', name: 'Блок-2' },
+    { id: 'block_03', name: 'Блок-3' }
   ];
 
 
@@ -45,7 +45,7 @@ function updateToolbox(ws: Blockly.WorkspaceSvg) {
   if (toolboxDef && toolboxDef.contents) {
     const newToolboxConfig = JSON.parse(JSON.stringify(toolboxDef));
     const category = newToolboxConfig.contents.find(
-      (c: any) => c.kind === 'category' && c.name === "Мои устройства"
+      (c: any) => c.kind === 'category' && c.name === "Мои блоки"
     );
 
     if (category) {
