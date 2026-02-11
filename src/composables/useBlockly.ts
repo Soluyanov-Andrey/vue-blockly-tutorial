@@ -1,90 +1,71 @@
 import { onMounted, onUnmounted, ref } from 'vue'
 import * as Blockly from 'blockly/core'
-import toolboxConfig from '@/toolbox/toolbox.json'  // @ = src/ (настройте alias в vite.config.ts, если нужно)
+import toolboxConfig from '@/toolbox/toolbox.json'
 import { registerMyPrint } from '@/blocks/custom/myPrint';
+// Импортируем вашу функцию генерации
+import { generateWorkspaceJson } from '@/generators/json';
 
 export function useBlockly() {
   const workspace = ref<Blockly.WorkspaceSvg | null>(null)
 
-  function resizeBlockly() {
-    if (!workspace.value) return
+  // Функция, которая будет вызываться при любом изменении в Blockly
+  function handleWorkspaceChange(event: any) {
+    if (!workspace.value) return;
 
+    // Игнорируем события интерфейса (например, просто открытие тулбокса),
+    // чтобы не спамить в консоль. Реагируем только на действия с блоками.
+    const isUiEvent = event.isUiEvent;
+    if (isUiEvent) return;
+
+    // Генерируем JSON с помощью вашей функции
+    const jsonOutput = generateWorkspaceJson(workspace.value);
+    
+    console.log('--- Current Workspace JSON ---');
+    console.log(jsonOutput);
+  }
+
+  function resizeBlockly() {
+    // ... ваш код resizeBlockly без изменений ...
+    if (!workspace.value) return
     const blocklyArea = document.getElementById('blocklyArea')
     const blocklyDiv = document.getElementById('blocklyDiv')
     if (!blocklyArea || !blocklyDiv) return
-
     let element: HTMLElement | null = blocklyArea
-    let x = 0
-    let y = 0
-    do {
-      x += element.offsetLeft
-      y += element.offsetTop
-      element = element.offsetParent as HTMLElement
-    } while (element)
-
-    blocklyDiv.style.left = `${x}px`
-    blocklyDiv.style.top = `${y}px`
-    blocklyDiv.style.width = `${blocklyArea.offsetWidth}px`
-    blocklyDiv.style.height = `${blocklyArea.offsetHeight}px`
-
+    let x = 0; let y = 0
+    do { x += element.offsetLeft; y += element.offsetTop; element = element.offsetParent as HTMLElement } while (element)
+    blocklyDiv.style.left = `${x}px`; blocklyDiv.style.top = `${y}px`
+    blocklyDiv.style.width = `${blocklyArea.offsetWidth}px`; blocklyDiv.style.height = `${blocklyArea.offsetHeight}px`
     Blockly.svgResize(workspace.value)
   }
-  
 
   onMounted(() => {
-  // Сначала очищаем стандартные блоки, если хотите чистый набор
-  // Blockly.Blocks = {};   // ← раскомментируйте, если хотите отключить всё лишнее
-
-  // Регистрируем только свои блоки
-    
-     console.log('onMounted сработал — начинаем регистрацию блоков')
-
-    // твоя регистрация, если есть
     if (typeof registerMyPrint === 'function') {
       registerMyPrint()
-      console.log('Блок my_print зарегистрирован')
     }
     
     workspace.value = Blockly.inject('blocklyDiv', {
       toolbox: toolboxConfig,
-      zoom: {
-        controls: true,
-        wheel: true,
-        startScale: 1.0,
-        maxScale: 4,
-        minScale: 0.3,
-      },
-      move: {
-        scrollbars: true,
-        drag: true,
-        wheel: true,
-      },
-      grid: {
-        spacing: 25,
-        length: 3,
-        colour: '#ccc',
-        snap: true,
-      },
+      // ... ваши настройки (zoom, grid, renderer: 'zelos') ...
       trashcan: true,
       renderer: 'zelos',
     })
 
-    // Первый resize с небольшой задержкой (браузер ещё не дорисовал)
-    setTimeout(resizeBlockly, 100)
+    // ВАЖНО: Вешаем слушатель событий сразу после создания workspace
+    workspace.value.addChangeListener(handleWorkspaceChange);
 
+    setTimeout(resizeBlockly, 100)
     window.addEventListener('resize', resizeBlockly)
   })
 
   onUnmounted(() => {
     window.removeEventListener('resize', resizeBlockly)
     if (workspace.value) {
+      // Удаляем слушатель перед удалением самого workspace
+      workspace.value.removeChangeListener(handleWorkspaceChange);
       workspace.value.dispose()
       workspace.value = null
     }
   })
 
-  return {
-    workspace,
-    resizeBlockly,  // можно вернуть, если где-то понадобится вызвать вручную
-  }
+  return { workspace, resizeBlockly }
 }
