@@ -1,17 +1,15 @@
 {
   "kind": "categoryToolbox",
   "contents": [
-    // ... другие категории
     {
       "kind": "category",
-      "name": "Custom",               // или "Print", "My Blocks" — любое название
+      "name": "Мои блоки",
       "colour": "#A65C5C",
       "contents": [
         {
           "kind": "block",
-          "type": "my_print"          // ← обязательно точно такое же имя, как в Blockly.Blocks['my_print']
+          "type": "my_print" 
         }
-        // можно добавить ещё свои блоки сюда
       ]
     }
   ]
