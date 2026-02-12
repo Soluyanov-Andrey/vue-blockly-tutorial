@@ -114,7 +114,8 @@ function handleWorkspaceChange(event: any) {
 
   if (isFinishedAction) {
     const json = generateWorkspaceJson(workspace.value);
-    console.log("--- Final JSON ---", json);
+    latestJson.value = json;
+    // console.log("--- Final JSON ---", json);
   }
 
   // 3. ОБНОВЛЕНИЕ ТУЛБОКСА — только когда состав блоков изменился физически

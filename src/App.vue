@@ -59,6 +59,7 @@ const mySiteObject = ref<any[]>([])
  * следим за JSON из Blockly. Как только он изменился — прогоняем через компилятор.
  */
 watch(latestJson, (newRawData) => {
+  
   if (newRawData) {
     // Шлюз принимает сырой JSON и превращает его в структуру сайта
     mySiteObject.value = compile(newRawData)
@@ -75,26 +76,6 @@ watch(activeTab, async (newTab) => {
     resizeBlockly() // Вызываем  функцию из useBlockly
   }
 })
-// Временный тест для проверки шлюза
-setTimeout(() => {
-  console.log("Тест: Имитируем приход данных из Blockly...");
-  
-  // Записываем данные в latestJson, за которым следит наш watch
-  latestJson.value = [
-    {
-      rowId: "test_row_from_gateway",
-      rowTitle: "Проверка шлюза",
-      blocks: [
-        { 
-          id: "T1", 
-          type: "text", 
-          title: "Успех!", 
-          data: { content: "Если ты видишь этот текст, значит шлюз работает!" } 
-        }
-      ]
-    }
-  ];
-}, 2000);
 
 </script>
 
