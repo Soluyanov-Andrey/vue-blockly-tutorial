@@ -1,6 +1,6 @@
 import * as Blockly from 'blockly/core'
-
 export const jsonGenerator = new Blockly.CodeGenerator('JSON')
+
 jsonGenerator.ORDER_ATOMIC = 0
 jsonGenerator.ORDER_NONE = 0
 
