@@ -4,32 +4,37 @@
     {
       "kind": "category",
       "name": "Мои блоки",
+      "kind": "category",
+      "colour": "#5b67a5",
       "contents": [
         {
           "kind": "block",
           "type": "my_print",
           "id": "block_01",
-
-
-          "fields": {
-            "NAME": "Блок-1"
-          }
+          "fields": { "NAME": "Блок-1" }
         },
         {
           "kind": "block",
           "type": "my_print",
           "id": "block_02",
-          "fields": {
-            "NAME": "Блок-2"
-          }
+          "fields": { "NAME": "Блок-2" }
         },
         {
           "kind": "block",
           "type": "my_print",
           "id": "block_03",
-          "fields": {
-            "NAME": "Блок-3"
-          }
+          "fields": { "NAME": "Блок-3" }
+        }
+      ]
+    },
+    {
+      "kind": "category",
+      "name": "Контейнеры",
+      "colour": "#995ba5",
+      "contents": [
+        {
+          "kind": "block",
+          "type": "group_container"
         }
       ]
     }

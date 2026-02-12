@@ -38,6 +38,41 @@ jsonGenerator.forBlock['my_print'] = function(block, generator) {
 }
 
 /**
+ * Блок group_container
+ */
+jsonGenerator.forBlock['group_container'] = function(block, generator) {
+  const blockData: any = {
+    type: 'group_container',
+    id: block.id,
+    children: [] // Здесь будут лежать вложенные блоки
+  };
+
+  // 1. Обработка ВНУТРЕННИХ блоков (вход STACK)
+  const firstInnerBlock = block.getInputTargetBlock('STACK');
+  if (firstInnerBlock) {
+    // blockToCode запустит цепочку: первый внутренний блок + его "next" соседи
+    const innerJson = generator.blockToCode(firstInnerBlock);
+    if (innerJson) {
+      // Так как генератор возвращает строку, парсим её
+      // Если блоков внутри много, они уже будут связаны через "next" внутри JSON
+      blockData.children = [JSON.parse(innerJson as string)];
+    }
+  }
+
+  // 2. Обработка СЛЕДУЮЩЕГО блока (после группы)
+  const nextBlock = block.getNextBlock();
+  if (nextBlock) {
+    const nextJson = generator.blockToCode(nextBlock);
+    if (nextJson) {
+      blockData.next = JSON.parse(nextJson as string);
+    }
+  }
+
+  return JSON.stringify(blockData);
+}
+
+
+/**
  * Важнейшая правка: scrub_ больше не должен приклеивать блоки через \n!
  * Теперь мы управляем вложенностью внутри самих функций блоков.
  */

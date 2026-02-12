@@ -5,7 +5,7 @@ import { registerMyPrint } from '@/blocks/custom/myPrint';
 // Импортируем созданную функцию генерации
 import { generateWorkspaceJson } from '@/generators/json';
 import { patchBlocklyFocus } from '@/utils/patchBlockly';
-
+import { registerGroupContainer } from '@/blocks/custom/groupContainer';
 
 // Вызываем патч
 patchBlocklyFocus();
@@ -132,6 +132,10 @@ function handleWorkspaceChange(event: any) {
 
 
   onMounted(() => {
+    
+    if (typeof registerMyPrint === 'function') registerMyPrint();
+      registerGroupContainer(); 
+
     if (typeof registerMyPrint === 'function') {
       registerMyPrint()
     }
