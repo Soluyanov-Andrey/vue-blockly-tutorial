@@ -22,7 +22,7 @@
       </div>
 
       <div v-if="activeTab === 'site'" class="site-preview-area">
-        <SitePreview :page-data="globalJson" />
+        <SitePreview :structure="mySiteObject" />
       </div>
 
     </main>
@@ -32,29 +32,65 @@
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
 import { useBlockly } from './composables/useBlockly'
-import SitePreview from './components/SitePreview.vue' // Создай этот файл
+import SitePreview from './components/SitePreview.vue'
+import img_block1 from './assets/b1.png'
+import img_block3 from './assets/b3.png'
+import img_block5 from './assets/b5.png'
+import img_block6 from './assets/b6.png'
+import img_block8 from './assets/b8.png'
 
 const activeTab = ref<'editor' | 'site'>('editor')
 
-// Подключаем твою магию Blockly
-// Важно: useBlockly внутри себя ищет id="blocklyDiv"
+// 1. Подключаем Blockly
 const { latestJson, resizeBlockly } = useBlockly()
 
-// Глобальный JSON для сайта (синхронизируем с тем, что дает composable)
-const globalJson = latestJson 
+// 2. Наш "Чистый объект" для сайта (пока статический для теста)
+// Позже мы заменим это на результат работы компилятора
+const mySiteObject = ref([
+  // РЯД №1
+  {
+    rowId: "row_1",
+    rowTitle: "Верхняя секция",
+    blocks: [
+       { id: "B1", type: "image", title: "Фото 1", data: { src: img_block1 } },
+       { id: "B4", type: "text", title: "Заголовок", data: { content: "Блок 4" } },
+       { id: "B3", type: "image", title: "Фото 1", data: { src: img_block3 } },
+       { id: "B6", type: "image", title: "Фото 1", data: { src: img_block6 } },
+       { id: "B8", type: "image", title: "Фото 1", data: { src: img_block8 } }
+    ]
+  },
+    // РЯД №3
+  {
+    rowId: "row_3",
+    rowTitle: "Нижняя секция",
+    blocks: [
+      { id: "B2", type: "text", title: "Заголовок", data: { content: "Блок 2" } }
+    ]
+  },
+  // РЯД №2
+  {
+    rowId: "row_2",
+    rowTitle: "Средняя секция (Картинки)",
+    blocks: [
+       { id: "B7", type: "text", title: "Заголовок", data: { content: "Блок 7" } },
+       { id: "B5", type: "image", title: "Фото 1", data: { src: img_block5 } }
+    
+    ]
+  }
 
-// КРИТИЧЕСКИЙ МОМЕНТ:
-// Когда мы возвращаемся на вкладку 'editor', нам нужно заново пересчитать размеры
+
+]);
+
+// 3. Следим за переключением вкладок для корректного ресайза Blockly
 watch(activeTab, async (newTab) => {
   if (newTab === 'editor') {
-    await nextTick() // Ждем, пока Vue покажет div обратно
-    resizeBlockly()  // Вызываем твою функцию ресайза
+    await nextTick()
+    resizeBlockly() // Вызываем  функцию из useBlockly
   }
 })
 </script>
 
 <style>
-/* Сбрасываем дефолты */
 html, body, #app {
   margin: 0;
   padding: 0;
@@ -75,7 +111,7 @@ html, body, #app {
   align-items: center;
   padding: 0 15px;
   gap: 10px;
-  flex-shrink: 0; /* Чтобы шапка не сжималась */
+  flex-shrink: 0;
 }
 
 .top-nav button {
@@ -92,14 +128,15 @@ html, body, #app {
 }
 
 .main-content {
-  flex-grow: 1; /* Занимает всё оставшееся место */
-  position: relative; /* Важно для абсолютного позиционирования внутри */
+  flex-grow: 1;
+  position: relative;
+  background: #eee;
 }
 
-/* Твои оригинальные стили для Blockly */
+/* Стили для BlocklyArea (твои оригинальные) */
 #blocklyArea {
   position: absolute;
-  inset: 0; /* Занимает всю main-content */
+  inset: 0;
   width: 100%;
   height: 100%;
 }
@@ -108,11 +145,11 @@ html, body, #app {
   position: absolute;
 }
 
-/* Стили для сайта */
+/* Стили для области сайта */
 .site-preview-area {
   width: 100%;
   height: 100%;
   overflow-y: auto;
-  background: white;
+  background: #f0f2f5;
 }
 </style>
