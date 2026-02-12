@@ -32,10 +32,8 @@
       "name": "Контейнеры",
       "colour": "#995ba5",
       "contents": [
-        {
-          "kind": "block",
-          "type": "group_container"
-        }
+        { "kind": "block", "type": "group_container", "id": "container_01", "fields": { "NAME": "Группа А" } },
+        { "kind": "block", "type": "group_container", "id": "container_02", "fields": { "NAME": "Группа Б" } }
       ]
     }
   ]

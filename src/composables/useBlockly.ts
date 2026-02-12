@@ -16,10 +16,12 @@ export function useBlockly() {
   const workspace = ref<Blockly.WorkspaceSvg | null>(null)
 
   // Список всех наших уникальных ID (позже можно вынести в JSON)
-  const ALL_DEVICES = [
-    { id: 'block_01', name: 'Блок-1' },
-    { id: 'block_02', name: 'Блок-2' },
-    { id: 'block_03', name: 'Блок-3' }
+ const ALL_DEVICES = [
+    { id: 'block_01', name: 'Блок-1', type: 'my_print' },
+    { id: 'block_02', name: 'Блок-2', type: 'my_print' },
+    { id: 'block_03', name: 'Блок-3', type: 'my_print' },
+    { id: 'container_01', name: 'Группа А', type: 'group_container' },
+    { id: 'container_02', name: 'Группа Б', type: 'group_container' }
   ];
 
 
@@ -33,49 +35,55 @@ function updateToolbox(ws: Blockly.WorkspaceSvg) {
 
   if (currentUsedIdsStr === lastUsedIdsStr) return;
   
-  const availableDevices = ALL_DEVICES.filter(device => !usedIds.includes(device.id));
-  const categoryContents = availableDevices.map(device => ({
-    'kind': 'block',
-    'type': 'my_print',
-    'id': device.id,
-    'fields': { 'NAME': device.name }
-  }));
-
   const toolboxDef = ws.options.languageTree;
-  if (toolboxDef && toolboxDef.contents) {
-    const newToolboxConfig = JSON.parse(JSON.stringify(toolboxDef));
+  if (!toolboxDef || !toolboxDef.contents) return;
+
+  // 1. Создаем глубокую копию текущего конфига тулбокса
+  const newToolboxConfig = JSON.parse(JSON.stringify(toolboxDef));
+
+  // 2. Вспомогательная функция для обновления категории
+  const fillCategory = (categoryName: string, blockType: string) => {
     const category = newToolboxConfig.contents.find(
-      (c: any) => c.kind === 'category' && c.name === "Мои блоки"
+      (c: any) => c.kind === 'category' && c.name === categoryName
     );
 
     if (category) {
-      category.contents = categoryContents;
+      // Фильтруем ALL_DEVICES: берем только нужный тип и только те, что НЕ на поле
+      const available = ALL_DEVICES.filter(d => d.type === blockType && !usedIds.includes(d.id));
       
-      // ХАК: Временно отключаем FocusManager перед обновлением
-      // Это предотвратит попытку Blockly сфокусироваться на удаленном узле
-      const focusMgr = (Blockly as any).focusManager;
-      const originalFocus = focusMgr?.focusNode;
-      
-      if (focusMgr) {
-        focusMgr.focusNode = () => {}; // Подменяем на пустую функцию
-      }
-
-      setTimeout(() => {
-        try {
-          lastUsedIdsStr = currentUsedIdsStr;
-          ws.updateToolbox(newToolboxConfig);
-          
-          // Возвращаем фокус на место через мгновение
-          setTimeout(() => {
-            if (focusMgr) focusMgr.focusNode = originalFocus;
-          }, 50);
-          
-        } catch (e) {
-          console.warn("Toolbox update skipped:", e);
-        }
-      }, 100);
+      category.contents = available.map(d => ({
+        'kind': 'block',
+        'type': d.type,
+        'id': d.id,
+        'fields': { 'NAME': d.name }
+      }));
     }
+  };
+
+  // 3. Обновляем обе вкладки
+  fillCategory("Мои блоки", "my_print");
+  fillCategory("Контейнеры", "group_container");
+
+  // --- Далее ваш проверенный код с ХАКом фокуса ---
+  const focusMgr = (Blockly as any).focusManager;
+  const originalFocus = focusMgr?.focusNode;
+  
+  if (focusMgr) {
+    focusMgr.focusNode = () => {}; 
   }
+
+  setTimeout(() => {
+    try {
+      lastUsedIdsStr = currentUsedIdsStr;
+      ws.updateToolbox(newToolboxConfig);
+      
+      setTimeout(() => {
+        if (focusMgr) focusMgr.focusNode = originalFocus;
+      }, 50);
+    } catch (e) {
+      console.warn("Toolbox update skipped:", e);
+    }
+  }, 100);
 }
 
 
