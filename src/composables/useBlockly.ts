@@ -20,8 +20,15 @@ export function useBlockly() {
     { id: 'block_01', name: 'Блок-1', type: 'my_print' },
     { id: 'block_02', name: 'Блок-2', type: 'my_print' },
     { id: 'block_03', name: 'Блок-3', type: 'my_print' },
-    { id: 'container_01', name: 'Группа А', type: 'group_container' },
-    { id: 'container_02', name: 'Группа Б', type: 'group_container' }
+    { id: 'block_04', name: 'Блок-4', type: 'my_print' },
+    { id: 'block_05', name: 'Блок-5', type: 'my_print' },
+    { id: 'block_06', name: 'Блок-6', type: 'my_print' },
+    { id: 'block_07', name: 'Блок-7', type: 'my_print' },
+    { id: 'block_08', name: 'Блок-8', type: 'my_print' },
+    { id: 'block_09', name: 'Блок-9', type: 'my_print' },
+    { id: 'container_01', name: 'Верхняя секция', type: 'group_container' },
+    { id: 'container_02', name: 'Средняя секция', type: 'group_container' },
+    { id: 'container_03', name: 'Нижняя секция', type: 'group_container' }
   ];
 
 

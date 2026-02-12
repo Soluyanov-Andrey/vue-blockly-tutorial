@@ -24,7 +24,48 @@
           "type": "my_print",
           "id": "block_03",
           "fields": { "NAME": "Блок-3" }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "block_04",
+          "fields": { "NAME": "Блок-4" }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "block_05",
+          "fields": { "NAME": "Блок-5" }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "block_06",
+          "fields": { "NAME": "Блок-6" }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "block_07",
+          "fields": { "NAME": "Блок-7" }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "block_08",
+          "fields": { "NAME": "Блок-8" }
+        },
+        {
+          "kind": "block",
+          "type": "my_print",
+          "id": "block_09",
+          "fields": { "NAME": "Блок-9" }
         }
+
+
+
+
+
       ]
     },
     {
@@ -32,8 +73,9 @@
       "name": "Контейнеры",
       "colour": "#995ba5",
       "contents": [
-        { "kind": "block", "type": "group_container", "id": "container_01", "fields": { "NAME": "Группа А" } },
-        { "kind": "block", "type": "group_container", "id": "container_02", "fields": { "NAME": "Группа Б" } }
+        { "kind": "block", "type": "group_container", "id": "container_01", "fields": { "NAME": "Верхняя секция" } },
+        { "kind": "block", "type": "group_container", "id": "container_02", "fields": { "NAME": "Средняя секция" } },
+        { "kind": "block", "type": "group_container", "id": "container_03", "fields": { "NAME": "Нижняя секция" } }
       ]
     }
   ]

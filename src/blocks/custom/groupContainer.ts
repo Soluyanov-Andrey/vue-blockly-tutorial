@@ -5,7 +5,7 @@ export const registerGroupContainer = () => {
   Blockly.Blocks['group_container'] = {
     init: function() {
       this.appendDummyInput()
-          .appendField("Группировка")
+          .appendField("")
           .appendField(new Blockly.FieldLabelSerializable("..."), "NAME");
       this.appendStatementInput("STACK") // Вход для вложенных блоков
           .setCheck(null);
