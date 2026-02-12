@@ -14,7 +14,8 @@ patchBlocklyFocus();
 
 export function useBlockly() {
   const workspace = ref<Blockly.WorkspaceSvg | null>(null)
-
+  // 1. Добавляем реактивную переменную для JSON
+  const latestJson = ref<any>(null)
   // Список всех наших уникальных ID (позже можно вынести в JSON)
  const ALL_DEVICES = [
     { id: 'block_01', name: 'Блок-1', type: 'my_print' },
@@ -179,5 +180,5 @@ function handleWorkspaceChange(event: any) {
     }
   })
 
-  return { workspace, resizeBlockly }
+  return { workspace, resizeBlockly, latestJson }
 }

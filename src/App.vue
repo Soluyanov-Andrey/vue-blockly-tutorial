@@ -31,55 +31,42 @@
 
 <script setup lang="ts">
 import { ref, watch, nextTick } from 'vue'
+import { useCompiler } from './compiler'; // Импортируем шлюз
 import { useBlockly } from './composables/useBlockly'
 import SitePreview from './components/SitePreview.vue'
+
+
 import img_block1 from './assets/b1.png'
 import img_block3 from './assets/b3.png'
 import img_block5 from './assets/b5.png'
 import img_block6 from './assets/b6.png'
 import img_block8 from './assets/b8.png'
 
+
 const activeTab = ref<'editor' | 'site'>('editor')
+
+// 1. Инициализируем компилятор
+const { compile } = useCompiler()
 
 // 1. Подключаем Blockly
 const { latestJson, resizeBlockly } = useBlockly()
 
-// 2. Наш "Чистый объект" для сайта (пока статический для теста)
-// Позже мы заменим это на результат работы компилятора
-const mySiteObject = ref([
-  // РЯД №1
-  {
-    rowId: "row_1",
-    rowTitle: "Верхняя секция",
-    blocks: [
-       { id: "B1", type: "image", title: "Фото 1", data: { src: img_block1 } },
-       { id: "B4", type: "text", title: "Заголовок", data: { content: "Блок 4" } },
-       { id: "B3", type: "image", title: "Фото 1", data: { src: img_block3 } },
-       { id: "B6", type: "image", title: "Фото 1", data: { src: img_block6 } },
-       { id: "B8", type: "image", title: "Фото 1", data: { src: img_block8 } }
-    ]
-  },
-    // РЯД №3
-  {
-    rowId: "row_3",
-    rowTitle: "Нижняя секция",
-    blocks: [
-      { id: "B2", type: "text", title: "Заголовок", data: { content: "Блок 2" } }
-    ]
-  },
-  // РЯД №2
-  {
-    rowId: "row_2",
-    rowTitle: "Средняя секция (Картинки)",
-    blocks: [
-       { id: "B7", type: "text", title: "Заголовок", data: { content: "Блок 7" } },
-       { id: "B5", type: "image", title: "Фото 1", data: { src: img_block5 } }
-    
-    ]
+// 3. Структура сайта теперь пустая по умолчанию
+const mySiteObject = ref<any[]>([])
+
+/**
+ * ГЛАВНЫЙ ПРОЦЕСС ОБНОВЛЕНИЯ
+ * следим за JSON из Blockly. Как только он изменился — прогоняем через компилятор.
+ */
+watch(latestJson, (newRawData) => {
+  if (newRawData) {
+    // Шлюз принимает сырой JSON и превращает его в структуру сайта
+    mySiteObject.value = compile(newRawData)
   }
+}, { immediate: true, deep: true })
 
 
-]);
+
 
 // 3. Следим за переключением вкладок для корректного ресайза Blockly
 watch(activeTab, async (newTab) => {
@@ -88,6 +75,27 @@ watch(activeTab, async (newTab) => {
     resizeBlockly() // Вызываем  функцию из useBlockly
   }
 })
+// Временный тест для проверки шлюза
+setTimeout(() => {
+  console.log("Тест: Имитируем приход данных из Blockly...");
+  
+  // Записываем данные в latestJson, за которым следит наш watch
+  latestJson.value = [
+    {
+      rowId: "test_row_from_gateway",
+      rowTitle: "Проверка шлюза",
+      blocks: [
+        { 
+          id: "T1", 
+          type: "text", 
+          title: "Успех!", 
+          data: { content: "Если ты видишь этот текст, значит шлюз работает!" } 
+        }
+      ]
+    }
+  ];
+}, 2000);
+
 </script>
 
 <style>
