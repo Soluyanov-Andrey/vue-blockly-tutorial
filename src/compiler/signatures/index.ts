@@ -5,6 +5,9 @@ import { layoutSignatures } from './layout';
 import { contentSignatures } from './content';
 
 export const SIGNATURES = {
-  ...layoutSignatures,
-  ...contentSignatures
+  layout: layoutSignatures,
+  content: contentSignatures
 };
+
+// Типизация для удобства (опционально)
+export type SignaturesType = typeof SIGNATURES;
