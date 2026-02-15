@@ -1,3 +1,4 @@
+//src/generators/json.ts
 import * as Blockly from 'blockly/core'
 export const jsonGenerator = new Blockly.CodeGenerator('JSON')
 
@@ -34,6 +35,38 @@ jsonGenerator.forBlock['my_print'] = function(block, generator) {
   }
 
   // Возвращаем строку-объект
+  return JSON.stringify(blockData);
+}
+
+/**
+ * Блок home_container
+ */
+jsonGenerator.forBlock['home_container'] = function(block, generator) {
+  const blockData: any = {
+    type: 'home_container',
+    id: block.id,
+    children: [] 
+  };
+
+  // 1. Внутренние блоки (те, что вставлены ВНУТРЬ)
+  const firstInnerBlock = block.getInputTargetBlock('STACK');
+  if (firstInnerBlock) {
+    const innerJson = generator.blockToCode(firstInnerBlock);
+    if (innerJson) {
+      blockData.children = [JSON.parse(innerJson as string)];
+    }
+  }
+
+  // 2. Следующие блоки (те, что прикреплены СНИЗУ)
+  const nextBlock = block.getNextBlock();
+  if (nextBlock) {
+    const nextJson = generator.blockToCode(nextBlock);
+    if (nextJson) {
+      blockData.next = JSON.parse(nextJson as string);
+    }
+  }
+
+  // ВАЖНО: Возвращаем чистый JSON без всяких запятых в конце
   return JSON.stringify(blockData);
 }
 

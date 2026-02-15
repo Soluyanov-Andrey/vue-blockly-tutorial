@@ -77,6 +77,15 @@
         { "kind": "block", "type": "group_container", "id": "container_02", "fields": { "NAME": "Средняя секция" } },
         { "kind": "block", "type": "group_container", "id": "container_03", "fields": { "NAME": "Нижняя секция" } }
       ]
+    },
+    {
+      "kind": "category",
+      "name": "Главная страница",
+      "colour": "#5ba56b",
+      "contents": [
+        { "kind": "block", "type": "home_container", "id": "container_home", "fields": { "NAME": "Главная страница" } }
+
+      ]
     }
   ]
 }

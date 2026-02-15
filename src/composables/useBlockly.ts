@@ -1,3 +1,4 @@
+//src/composables/useBlockly.ts
 import { onMounted, onUnmounted, ref } from 'vue'
 import * as Blockly from 'blockly/core'
 import toolboxConfig from '@/toolbox/toolbox.json'
@@ -6,7 +7,7 @@ import { registerMyPrint } from '@/blocks/custom/myPrint';
 import { generateWorkspaceJson } from '@/generators/json';
 import { patchBlocklyFocus } from '@/utils/patchBlockly';
 import { registerGroupContainer } from '@/blocks/custom/groupContainer';
-
+import { registerHomeContainer } from '@/blocks/custom/homeContainer';
 // Вызываем патч
 patchBlocklyFocus();
 
@@ -29,7 +30,8 @@ export function useBlockly() {
     { id: 'block_09', name: 'Блок-9', type: 'my_print' },
     { id: 'container_01', name: 'Верхняя секция', type: 'group_container' },
     { id: 'container_02', name: 'Средняя секция', type: 'group_container' },
-    { id: 'container_03', name: 'Нижняя секция', type: 'group_container' }
+    { id: 'container_03', name: 'Нижняя секция', type: 'group_container' },
+    { id: 'container_home', name: 'Главная страница', type: 'home_container' }
   ];
 
 
@@ -71,6 +73,7 @@ function updateToolbox(ws: Blockly.WorkspaceSvg) {
   // 3. Обновляем обе вкладки
   fillCategory("Мои блоки", "my_print");
   fillCategory("Контейнеры", "group_container");
+  fillCategory("Главная страница", "home_container");
 
   // --- Далее ваш проверенный код с ХАКом фокуса ---
   const focusMgr = (Blockly as any).focusManager;
@@ -152,7 +155,7 @@ function handleWorkspaceChange(event: any) {
     
     if (typeof registerMyPrint === 'function') registerMyPrint();
       registerGroupContainer(); 
-
+      registerHomeContainer();
     if (typeof registerMyPrint === 'function') {
       registerMyPrint()
     }
